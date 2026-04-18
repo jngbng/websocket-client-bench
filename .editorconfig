@@ -1,0 +1,36 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+trim_trailing_whitespace = true
+indent_style = space
+insert_final_newline = true
+max_line_length = 160
+
+[*.{c,cpp,h,hpp,json,yaml,md,mdx}]
+indent_size = 2
+max_line_length = 120
+
+[*.py]
+indent_size = 4
+
+# Ignore files
+[*.{json,md}]
+end_of_line = unset
+trim_trailing_whitespace = unset
+indent_style = unset
+indent_size = unset
+insert_final_newline = unset
+max_line_length = off
+generated_code = true
+
+# Ignore paths
+[{**/build/**,**/.cache/**,**/cpm_module/**}]
+end_of_line = unset
+trim_trailing_whitespace = unset
+indent_style = unset
+indent_size = unset
+insert_final_newline = unset
+max_line_length = off
+generated_code = true

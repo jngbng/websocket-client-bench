@@ -1,0 +1,30 @@
+BasedOnStyle: Google
+Language: Cpp
+
+# 들여쓰기
+IndentWidth: 2
+UseTab: Never
+
+# Pointer alignment (int* a)
+PointerAlignment: Left
+DerivePointerAlignment: false
+
+# 중괄호
+InsertBraces: true
+
+# 줄바꿈 관련
+ColumnLimit: '120'
+PackConstructorInitializers: NextLine # Never 로 하면 한줄에 하나씩 강제
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLambdasOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+
+# 헤더
+IncludeBlocks: Regroup
+
+AlignTrailingComments:
+  Kind: Never

@@ -1,0 +1,30 @@
+[requires]
+uwebsockets/20.71.0
+openssl/3.6.2
+magic_enum/0.9.7
+argparse/3.2
+
+# boost/beast
+boost/1.90.0
+certify/cci.20201114
+
+libwebsockets/4.3.5
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[layout]
+cmake_layout
+
+[options]
+uwebsockets/*:with_libdeflate=True
+usockets/*:with_ssl=openssl
+# usockets/*:with_ssl=wolfssl
+# usockets/*:eventloop=libuv
+
+# libwebsockets/*:with_zlib=True
+# libwebsockets/*:with_ssl=False
+libwebsockets/*:without_server=True
+libwebsockets/*:enable_extensions=True
+libwebsockets/*:with_zlib=zlib

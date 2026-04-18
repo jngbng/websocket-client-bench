@@ -1,0 +1,26 @@
+/cpm_modules
+*.log
+/.cache
+/CMakeUserPresets.json
+
+# cmake build directory
+/build*
+# **/build*/
+
+# etc 의 sample 파일 외
+/etc/*
+!/etc/_sample_*
+
+# log folder
+/log/*
+
+# backup file
+*~
+.*.swp
+.#*
+
+# 테스트 입력 데이터
+test-data/
+
+/.env
+/.configure

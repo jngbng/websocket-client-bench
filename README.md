@@ -16,15 +16,18 @@ libwebsocket의 benchmark를 참고했다. 샘플 웹소켓 서버를 두고, �
 | wspp             | 4.385s       | 81,200          | 81,200  |
 | boost/beast      | 13.981s      | 56,700          | 56,700  |
 | libwebsocket     | 3.956s       | 49,887          | 49,887  |
+| libhv            | 5.357s       | 86,670          | 86,670  |
+
 
 2 connections, no-gzip, payload: 512 bytes (pick 2nd result):
 
 | library          | compile-time | speed (msg/sec) | Kib/sec |
-| ---------------- | ------------ | --------------- | -------- |
+| ---------------- | ------------ | --------------- | ------- |
 | uwebsocket(max)  | 0.826s       | 102,090         | 51,443  |
 | wspp             | 4.385s       | 98,050          | 49,025  |
 | boost/beast      | 13.981s      | 63,035          | 31,517  |
 | libwebsocket     | 3.956s       | 61,799          | 30,899  |
+| libhv            | 5.357s       | 63,502          | 31,751  |
 
 
 Hardware:
@@ -55,6 +58,8 @@ CPU: AMD Ryzen 5 5560U with Radeon Graphics
   - https://github.com/actor-framework/actor-framework (experimental)
   - https://github.com/alibaba/PhotonLibOS (0.9.4 에서 포함될 예정)
   - https://github.com/ithewei/libhv
+  - https://github.com/tatsuhiro-t/wslay + I/O lib
+  - https://github.com/Qihoo360/evpp + websocket lib
 
 
 ## Memo
@@ -70,11 +75,13 @@ $ taskset -c 3 ./build/uwebsockets/load_test_websocket 500 127.0.0.1 9001 0 0 10
 $ taskset -c 3 ./build/wspp/wspp_client --connections 500 --payload 1024
 $ taskset -c 3 ./build/boost_beast/beast_client --connections 500 --payload 1024
 $ taskset -c 3 ./build/libwebsockets/lws_client --connections 500 --payload 1024
+$ taskset -c 3 ./build/libhv/hv_client --connections 500 --payload 1024
 
 $ taskset -c 3 ./build/uwebsockets/load_test_websocket 2 127.0.0.1 9001 0 0 512
 $ taskset -c 3 ./build/wspp/wspp_client --connections 2 --payload 512
 $ taskset -c 3 ./build/boost_beast/beast_client --connections 2 --payload 512
 $ taskset -c 3 ./build/libwebsockets/lws_client --connections 2 --payload 512
+$ taskset -c 3 ./build/libhv/hv_client --connections 2 --payload 512
 ```
 
 ## Reference

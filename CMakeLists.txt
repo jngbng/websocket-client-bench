@@ -36,6 +36,10 @@ if (NOT "${CUSTOM_MODULE_PATH}" IN_LIST CMAKE_MODULE_PATH)
   list(APPEND CMAKE_MODULE_PATH ${CUSTOM_MODULE_PATH})
 endif()
 
+include(cmake/CPM.cmake)
+
+CPMAddPackage("gh:ithewei/libhv@1.3.4")
+
 find_package(uwebsockets)
 find_package(OpenSSL REQUIRED)
 find_package(magic_enum)
@@ -50,3 +54,4 @@ add_subdirectory(uwebsockets)
 add_subdirectory(wspp)
 add_subdirectory(boost_beast)
 add_subdirectory(libwebsockets)
+add_subdirectory(libhv)

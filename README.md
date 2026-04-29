@@ -8,54 +8,60 @@ libwebsocket의 benchmark를 참고했다. 샘플 웹소켓 서버를 두고, �
 
 ## TL;DR; 결과
 
-CPU boost ON, RPS pinning OFF
+밴치마크 스킬이 부족해서 수치는 실험마다 편차가 커서 큰 의미가 없었다.
 
-500 connections, no-gzip, payload: 1024 bytes (pick 2nd result):
+`uwebsocket`, `libhv`는 더 빠르게 측정되었고 `libwebsocket`은 `boost/beast`와 별 차이가 없었다.
 
-| library          | compile-time | speed (msg/sec) | KiB/sec |
-| ---------------- | ------------ | --------------- | ------- |
-| uwebsocket(max)  | 0.826s       | 109,653         | 110,081 |
-| wspp             | 4.385s       | 81,200          | 81,200  |
-| boost/beast      | 13.981s      | 56,700          | 56,700  |
-| libwebsocket     | 3.956s       | 49,887          | 49,887  |
-| libhv            | 5.357s       | 86,670          | 86,670  |
+**CPU boost ON, RPS pinning OFF**
 
+**500 connections, no-gzip, payload: 1024 bytes (pick 2nd result):**
 
-2 connections, no-gzip, payload: 512 bytes (pick 2nd result):
+| library            | compile-time | speed (msg/sec) | KiB/sec |
+| ------------------ | ------------ | --------------- | ------- |
+| uwebsocket(max)    | 0.826s       | 109,653         | 110,081 |
+| wspp               | 4.385s       | 81,200          | 81,200  |
+| boost/beast        | 13.981s      | 56,700          | 56,700  |
+| boost/beast + coro | 13.981s      | 53,050          | 53,050  |
+| libwebsocket       | 3.956s       | 49,887          | 49,887  |
+| libhv              | 5.357s       | 86,670          | 86,670  |
 
-| library          | compile-time | speed (msg/sec) | Kib/sec |
-| ---------------- | ------------ | --------------- | ------- |
-| uwebsocket(max)  | 0.826s       | 102,090         | 51,443  |
-| wspp             | 4.385s       | 98,050          | 49,025  |
-| boost/beast      | 13.981s      | 63,035          | 31,517  |
-| libwebsocket     | 3.956s       | 61,799          | 30,899  |
-| libhv            | 5.357s       | 63,502          | 31,751  |
+**2 connections, no-gzip, payload: 512 bytes (pick 2nd result):**
 
-
-CPU boost OFF, RPS pinning ON
-
-500 connections, no-gzip, payload: 1024 bytes (pick 2nd result):
-
-| library          | compile-time | speed (msg/sec) | KiB/sec |
-| ---------------- | ------------ | --------------- | ------- |
-| uwebsocket(max)  | 0.826s       | 52,311          | 52,515  |
-| wspp             | 4.385s       | 60,408          | 60,408  |
-| boost/beast      | 13.981s      | 45,050          | 45,050  |
-| libwebsocket     | 3.956s       | 42,027          | 42,027  |
-| libhv            | 5.357s       | 56,427          | 56,427  |
+| library            | compile-time | speed (msg/sec) | Kib/sec |
+| ------------------ | ------------ | --------------- | ------- |
+| uwebsocket(max)    | 0.826s       | 102,090         | 51,443  |
+| wspp               | 4.385s       | 98,050          | 49,025  |
+| boost/beast        | 13.981s      | 63,035          | 31,517  |
+| boost/beast + coro | 13.981s      | 53,050          | 53,050  |
+| libwebsocket       | 3.956s       | 61,799          | 30,899  |
+| libhv              | 5.357s       | 63,502          | 31,751  |
 
 
-2 connections, no-gzip, payload: 512 bytes (pick 2nd result):
+**CPU boost OFF, RPS pinning ON**
 
-| library          | compile-time | speed (msg/sec) | Kib/sec |
-| ---------------- | ------------ | --------------- | ------- |
-| uwebsocket(max)  | 0.826s       | 31,204          | 15,723  |
-| wspp             | 4.385s       | 36,497          | 18,248  |
-| boost/beast      | 13.981s      | 28,295          | 14,147  |
-| libwebsocket     | 3.956s       | 22,837          | 11,418  |
-| libhv            | 5.357s       | 28,205          | 14,102  |
+**500 connections, no-gzip, payload: 1024 bytes (pick 2nd result):**
 
-Hardware:
+| library            | compile-time | speed (msg/sec) | KiB/sec |
+| ------------------ | ------------ | --------------- | ------- |
+| uwebsocket(max)    | 0.826s       | 52,311          | 52,515  |
+| wspp               | 4.385s       | 60,408          | 60,408  |
+| boost/beast        | 13.981s      | 45,050          | 45,050  |
+| boost/beast + coro | 13.981s      | 48,350          | 48,350  |
+| libwebsocket       | 3.956s       | 42,027          | 42,027  |
+| libhv              | 5.357s       | 56,427          | 56,427  |
+
+**2 connections, no-gzip, payload: 512 bytes (pick 2nd result):**
+
+| library            | compile-time | speed (msg/sec) | Kib/sec |
+| ------------------ | ------------ | --------------- | ------- |
+| uwebsocket(max)    | 0.826s       | 31,204          | 15,723  |
+| wspp               | 4.385s       | 36,497          | 18,248  |
+| boost/beast        | 13.981s      | 28,295          | 14,147  |
+| boost/beast + coro | 13.981s      | 28,445          | 14,222  |
+| libwebsocket       | 3.956s       | 22,837          | 11,418  |
+| libhv              | 5.357s       | 28,205          | 14,102  |
+
+**Hardware:**
 ```
 OS: Linux fedora 6.19.11-200.fc43.x86_64 #1 SMP PREEMPT_DYNAMIC Thu Apr  2 16:55:52 UTC 2026 x86_64 GNU/Linux
 Comiler: gcc (GCC) 15.2.1 20260123 (Red Hat 15.2.1-7)
@@ -132,12 +138,14 @@ Run client:
 $ taskset -c 3 ./build/uwebsockets/load_test_websocket 500 127.0.0.1 9001 0 0 1024
 $ taskset -c 3 ./build/wspp/wspp_client --connections 500 --payload 1024
 $ taskset -c 3 ./build/boost_beast/beast_client --connections 500 --payload 1024
+$ taskset -c 3 ./build/boost_beast/beast_coro_client --connections 500 --payload 1024
 $ taskset -c 3 ./build/libwebsockets/lws_client --connections 500 --payload 1024
 $ taskset -c 3 ./build/libhv/hv_client --connections 500 --payload 1024
 
 $ taskset -c 3 ./build/uwebsockets/load_test_websocket 2 127.0.0.1 9001 0 0 512
 $ taskset -c 3 ./build/wspp/wspp_client --connections 2 --payload 512
 $ taskset -c 3 ./build/boost_beast/beast_client --connections 2 --payload 512
+$ taskset -c 3 ./build/boost_beast/beast_coro_client --connections 2 --payload 512
 $ taskset -c 3 ./build/libwebsockets/lws_client --connections 2 --payload 512
 $ taskset -c 3 ./build/libhv/hv_client --connections 2 --payload 512
 ```
